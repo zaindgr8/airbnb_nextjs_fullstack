@@ -70,7 +70,7 @@ export async function CreateDescription(formData: FormData) {
   const bathroomsNumber = formData.get("bathroom") as string;
 
   const { data: imageData } = await supabase.storage
-    .from("images")
+    .from("Images")
     .upload(`${imageFile.name}-${new Date()}`, imageFile, {
       cacheControl: "2592000",
       contentType: "image/png",
@@ -94,6 +94,7 @@ export async function CreateDescription(formData: FormData) {
 
   return redirect(`/create/${homeId}/address`);
 }
+
 
 export async function createLocation(formData: FormData){
   const homeId= formData.get("homeId") as string

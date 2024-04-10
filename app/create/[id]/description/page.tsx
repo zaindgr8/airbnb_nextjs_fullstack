@@ -1,4 +1,3 @@
-// import { CreateDescription } from "@/app/actions";
 import Counter from "@/app/components/Counter";
 import CreationBottomBar from "@/app/components/CreationBottomBar";
 import { CreateDescription } from "@/components/ui/action";
@@ -7,67 +6,94 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-const Page = ({ params }: { params: { id: string } }) => {
+export default function DescriptionPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   return (
-    <div className="mx-auto w-3/5">
-      <form action={CreateDescription} >
+    <>
+      <div className="w-3/5 mx-auto">
+        <h2 className="text-3xl font-semibold tracking-tight transition-colors">
+          Please describe your home as good as you can!
+        </h2>
+      </div>
+
+      <form action={CreateDescription}>
         <input type="hidden" name="homeId" value={params.id} />
-        <div>
-          <Label>Title</Label>
-          <Input name="title" required placeholder="Short Title..." />
-        </div>
-        <div className="mt-5">
-          <Label>Description</Label>
-          <Textarea
-            placeholder="Describe your home..."
-            required
-            name="description"
-          />
-        </div>
-        <div className="mt-5">
-          <Label>Price</Label>
-          <Input
-            placeholder="Mention Price Per Night in USD..."
-            required
-            type="number"
-            name="price"
-            min={10}
-          />
-        </div>
-        <div className="mt-5">
-          <Label>Image</Label>
-          <Input
-            placeholder="Upload your file..."
-            required
-            type="file"
-            name="image"
-          />
-        </div>
-        <div className="mt-5 mb-5">
+        <div className="mx-auto w-3/5 mt-10 flex flex-col gap-y-5 mb-36">
+          <div className="flex flex-col gap-y-2">
+            <Label>Title</Label>
+            <Input
+              name="title"
+              type="text"
+              required
+              placeholder="Short and simple..."
+            />
+          </div>
+          <div className="flex flex-col gap-y-2">
+            <Label>Descrption</Label>
+            <Textarea
+              name="description"
+              required
+              placeholder="Please describe your home..."
+            />
+          </div>
+
+          <div className="flex flex-col gap-y-2">
+            <Label>Price</Label>
+            <Input
+              name="price"
+              type="number"
+              required
+              placeholder="Price per Night in USD"
+              min={10}
+            />
+          </div>
+
+          <div className="flex flex-col gap-y-2">
+            <Label>Image</Label>
+            <Input name="image" type="file" required />
+          </div>
+
           <Card>
-            <CardHeader>
-              <h1 className="underline font-bold">Guests</h1>
-              <span className="flex justify-between">
-                <p>How many guests you want?</p>
+            <CardHeader className="flex flex-col gap-y-5">
+              <div className="flex items-center justify-between">
+                <div className="flex flex-col">
+                  <h3 className="underline font-medium">Guests</h3>
+                  <p className="text-muted-foreground text-sm">
+                    How many guests do you want?
+                  </p>
+                </div>
+
                 <Counter name="guest" />
-              </span>
-              <h1 className="underline font-bold">Rooms</h1>
-              <span className="flex justify-between">
-                <p>How many rooms are there?</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex flex-col">
+                  <h3 className="underline font-medium">Rooms</h3>
+                  <p className="text-muted-foreground text-sm">
+                    How many rooms do you have?
+                  </p>
+                </div>
+
                 <Counter name="room" />
-              </span>
-              <h1 className="underxline font-bold">Bathrooms</h1>
-              <span className="flex justify-between">
-                <p>How many bathrooms are there?</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex flex-col">
+                  <h3 className="underline font-medium">Bathrooms</h3>
+                  <p className="text-muted-foreground text-sm">
+                    How many bathrooms do you have?
+                  </p>
+                </div>
+
                 <Counter name="bathroom" />
-              </span>
+              </div>
             </CardHeader>
           </Card>
         </div>
+
         <CreationBottomBar />
       </form>
-    </div>
+    </>
   );
-};
-
-export default Page;
+}
