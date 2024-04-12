@@ -1,4 +1,5 @@
 import { useCountries } from "@/app/lib/getCountries";
+import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -7,9 +8,10 @@ interface Props{
     description: string;
     location: string;
     price: number;
+    userId: string | undefined
 }
 
-const ListingCard = ({imagePath,description,location,price}:Props) => {
+const ListingCard = ({imagePath,description,location,price, userId}:Props) => {
     const {getCountryByValue}= useCountries()
     const country= getCountryByValue(location)
 
@@ -21,8 +23,13 @@ const ListingCard = ({imagePath,description,location,price}:Props) => {
           alt="houses"
           height={200}
           width={200}
-          className="rounded-lg object-cover mb-3 "
+          className="rounded-lg object-cover mb-3"
         />
+        {userId && (
+          <div className="">
+            <Heart/>
+          </div>
+        )}
       </div>
       <Link href="/">
         {country?.flag} {country?.label}/ {country?.region}

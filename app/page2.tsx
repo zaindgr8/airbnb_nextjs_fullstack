@@ -3,9 +3,16 @@ import MapFilterItems from "./components/MapFilterItems";
 import ShowItems from "./components/ShowItems";
 import SkeletonCards from "./components/SkeletonCards";
 
-
 const Home = async ({
   searchParams,
+}: {
+  searchParams?: {
+    filter?: string;
+    country?: string;
+    guest?: string;
+    room?: string;
+    bathroom?: string;
+  };
 }) => {
   return (
     <div className="mx-auto px-5 lg:px-10 container">
@@ -18,7 +25,7 @@ const Home = async ({
           </p>
         }
       >
-        <ShowItems searchParams={searchParams} />
+        {/* <ShowItems searchParams={searchParams} /> */}
       </Suspense>
     </div>
   );
@@ -26,7 +33,7 @@ const Home = async ({
 
 export default Home;
 
-function SkeletonLoading(){
+function SkeletonLoading() {
   return (
     <div className="grid grid-cols-4 gap-8 mt-5">
       <SkeletonCards />

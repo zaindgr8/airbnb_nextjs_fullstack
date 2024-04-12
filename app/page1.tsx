@@ -1,13 +1,23 @@
-import React from "react";
-import { getDefaultHighWaterMark } from "stream";
-import ListingCard from "./components/ListingCard/ListingCard";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/dist/types/server";
+import React, { Suspense } from "react";
+import ListingCard from "./components/ListingCard";
 import MapFilterItems from "./components/MapFilterItems";
+import NoItem from "./components/NoItem";
+import SkeletonCards from "./components/SkeletonCards";
 import prisma from "./lib/db";
 
 async function getData({
   searchParams,
+  userId,
 }: {
-  searchParams?: { filter?: string };
+  userId: string | undefined;
+  searchParams?: {
+    filter?: string;
+    country?: string;
+    guest?: string;
+    room?: string;
+    bathroom?: string;
+  };
 }) {
   const data = await prisma.home.findMany({
     where: {
@@ -27,49 +37,90 @@ async function getData({
   return data;
 }
 
-// const Home = async ({searchParams}:{searchParams?:{filter?:string}}) => {
-//   const data= await getData({searchParams: searchParams})
-//   return (
-//     <div className="mx-auto px-5 lg:px-10 container">
-//       <MapFilterItems />
-//       <ShowItems/>
-//     </div>
-//   );
-// };
-
-// export default Home
-
-export default async function Home({
+const Home = async ({
   searchParams,
 }: {
-  searchParams?: { filter?: string };
-}) {
-  const data = await getData({ searchParams: searchParams });
+  searchParams?: {
+    filter?: string;
+    country?: string;
+    guest?: string;
+    room?: string;
+    bathroom?: string;
+  };
+}) => {
   return (
-    <div>
+    <div className="mx-auto px-5 lg:px-10 container">
       <MapFilterItems />
-      {/* <ShowItems /> */}
+      <Suspense
+        key={searchParams?.filter}
+        fallback={
+          <p>
+            <SkeletonLoading />
+          </p>
+        }
+      >
+        {/* <ShowItems /> */}
+      </Suspense>
     </div>
   );
-}
+};
+
+export default Home;
 
 async function ShowItems({
   searchParams,
 }: {
-  searchParams?: { filter?: string };
+  searchParams?: {
+    filter?: string;
+    country?: string;
+    guest?: string;
+    room?: string;
+    bathroom?: string;
+  };
 }) {
-  const data = await getData({ searchParams: searchParams });
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+  const data = await getData({
+    searchParams: searchParams,
+    userId: user?.id,
+  });
+
   return (
-    <div className="gap-x-5 grid grid-cols-3 mb-5">
-      {data.map((item) => (
-        <ListingCard
-          key={item.id}
-          description={item.description as string}
-          imagePath={item.photo as string}
-          location={item.country as string}
-          price={item.price as number}
-        />
-      ))}
+    <>
+      {data.length === 0 ? (
+        <>
+          <NoItem />
+        </>
+      ) : (
+        <>
+          <div className="gap-x-5 grid grid-cols-3 mb-5">
+            {data.map((item) => (
+              <ListingCard
+                key={item.id}
+                description={item.description as string}
+                imagePath={item.photo as string}
+                location={item.country as string}
+                price={item.price as number}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </>
+  );
+}
+
+function SkeletonLoading() {
+  return (
+    <div className="grid grid-cols-4 gap-8 mt-5">
+      <SkeletonCards />
+      <SkeletonCards />
+      <SkeletonCards />
+      <SkeletonCards />
+      <SkeletonCards />
+      <SkeletonCards />
+      <SkeletonCards />
+      <SkeletonCards />
     </div>
   );
 }
