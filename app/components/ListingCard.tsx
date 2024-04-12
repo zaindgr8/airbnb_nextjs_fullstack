@@ -1,17 +1,22 @@
 import { useCountries } from "@/app/lib/getCountries";
-import { Heart } from "lucide-react";
+import { addToFavorite, DeleteFromFavorite } from "@/components/ui/action";
 import Image from "next/image";
 import Link from "next/link";
+import {AddToFavoriteButton, DeleteFromFavoriteButton } from "./SubmitButton";
 
-interface Props{
-    imagePath: string;
-    description: string;
-    location: string;
-    price: number;
-    userId: string | undefined
+interface Props {
+  imagePath: string;
+  description: string;
+  location: string;
+  price: number;
+  userId: string | undefined;
+  favoriteId: string;
+  isInFavoriteList: boolean;
+  homeId: string
+  pathName: string
 }
 
-const ListingCard = ({imagePath,description,location,price, userId}:Props) => {
+const ListingCard = ({imagePath,description,location,price, userId, favoriteId, isInFavoriteList, homeId, pathName}:Props) => {
     const {getCountryByValue}= useCountries()
     const country= getCountryByValue(location)
 
@@ -27,7 +32,21 @@ const ListingCard = ({imagePath,description,location,price, userId}:Props) => {
         />
         {userId && (
           <div className="">
-            <Heart/>
+            {isInFavoriteList ? (
+              <form action={DeleteFromFavorite}>
+                <input type="hidden" name="favoriteId" value={favoriteId} />
+                <input type="hidden" name="userId" value={userId} />
+                <input type="hidden" name="pathName" value={pathName} />
+                <DeleteFromFavoriteButton />
+              </form>
+            ) : (
+              <form action={addToFavorite}>
+                <input type="hidden" name="homeId" value={homeId} />
+                <input type="hidden" name="userId" value={userId} />
+                <input type="hidden" name="pathName" value={pathName} />
+                <AddToFavoriteButton />
+              </form>
+            )}
           </div>
         )}
       </div>

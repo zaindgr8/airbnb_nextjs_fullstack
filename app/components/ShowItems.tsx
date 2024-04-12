@@ -59,24 +59,24 @@ const ShowItems = async ({
   return (
     <>
       {data.length === 0 ? (
-        <>
-          <NoItem />
-        </>
+        <NoItem/>
       ) : (
-        <>
-          <div className="gap-x-5 grid grid-cols-3 mb-5">
-            {data.map((item) => (
-              <ListingCard
-                key={item.id}
-                description={item.description as string}
-                imagePath={item.photo as string}
-                location={item.country as string}
-                price={item.price as number}
-                userId={user?.id}
-              />
-            ))}
-          </div>
-        </>
+        <div className="grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-8">
+          {data.map((item) => (
+            <ListingCard
+              key={item.id}
+              description={item.description as string}
+              imagePath={item.photo as string}
+              location={item.country as string}
+              price={item.price as number}
+              userId={user?.id}
+              favoriteId={item.Favorite[0]?.id}
+              isInFavoriteList={item.Favorite.length > 0 ? true : false}
+              homeId={item.id}
+              pathName="/"
+            />
+          ))}
+        </div>
       )}
     </>
   );
