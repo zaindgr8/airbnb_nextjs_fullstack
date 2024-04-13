@@ -7,8 +7,8 @@ function getData({
   searchParams,
   userId,
 }: {
-  userId: string | undefined;
-  searchParams?: {
+    userId: string | undefined;
+    searchParams?: {
     filter?: string;
     country?: string;
     guest?: string;
@@ -59,7 +59,7 @@ const ShowItems = async ({
   return (
     <>
       {data.length === 0 ? (
-        <NoItem/>
+        <NoItem title="Sorry No Item Found" description="No Item available in your listing" />
       ) : (
         <div className="grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-8">
           {data.map((item) => (
