@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Heart, Loader2 } from "lucide-react";
 import { useFormStatus } from "react-dom";
 
+
 const CreationSubmit = () => {
   const { pending } = useFormStatus();
   return (
@@ -75,3 +76,20 @@ export function DeleteFromFavoriteButton() {
     </>
   )
       }
+
+export function ReservationSubmitButton(){
+    const { pending } = useFormStatus();
+  return (
+    <>
+      {pending ? (
+        <Button className="mt-5" disabled>
+          <Loader2 className="w-4 h-4 animate-spin" /> Please Wait...
+        </Button>
+      ) : (
+        <Button className="mt-5" type="submit">
+          Make A Reservation
+        </Button>
+      )}
+    </>
+  );
+}

@@ -33,6 +33,6 @@
     "app/create/[id]/address",
     "app/page.jsx",
     "app/page.jsx"
-  ],
+, "app/components/HomeMap.jsx", "app/components/SelectCalendar.jsx", "app/components/SearchComponent.tsx"  ],
   "exclude": ["node_modules"]
 }

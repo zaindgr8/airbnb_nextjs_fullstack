@@ -13,7 +13,6 @@ import { MenuIcon, Minus } from "lucide-react";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { createAirbnbHome } from "@/components/ui/action";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 
 const UserNav = async () => {
   const { getUser } = getKindeServerSession();
@@ -42,14 +41,16 @@ const UserNav = async () => {
                     Airbnb your Home
                   </button>
                 </form>
-                <Link href="/my-homes" >
+                <Link href="/my-homes">
                   <button>My Listings</button>
                 </Link>
 
                 <Link href="/favorites">
                   <button>My Favourites</button>
                 </Link>
-                <button>My Reservations</button>
+                <Link href="/reservations">
+                  <button>My Reservations</button>
+                </Link>
                 <Minus />
                 <LogoutLink className="w-full">Log Out</LogoutLink>
               </div>

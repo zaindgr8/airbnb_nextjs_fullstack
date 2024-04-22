@@ -19,7 +19,6 @@ interface Props {
 const ListingCard = ({imagePath,description,location,price, userId, favoriteId, isInFavoriteList, homeId, pathName}:Props) => {
     const {getCountryByValue}= useCountries()
     const country= getCountryByValue(location)
-
   return (
     <div className="">
       <div className="mt-5 p-5 ">
@@ -50,7 +49,7 @@ const ListingCard = ({imagePath,description,location,price, userId, favoriteId, 
           </div>
         )}
       </div>
-      <Link href="/">
+      <Link href={`/home/${homeId}`}>
         {country?.flag} {country?.label}/ {country?.region}
       </Link>
       <p className="text-muted-foreground text-sm line-clamp-2 w-[40vh]">

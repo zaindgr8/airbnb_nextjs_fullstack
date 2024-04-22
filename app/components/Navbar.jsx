@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import SearchComponent from "./SearchComponent";
 import UserNav from "./UserNav.tsx";
 
 const Navbar = () => {
@@ -24,9 +25,7 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="lg:flex items-center">
-        <div className="lg:ml-4 rounded-xl border-2 p-1">
-          Hello from the Search
-        </div>
+       <SearchComponent/>
       </div>
       <div className="p-1 rounded-lg border-2 ">
         <UserNav />
